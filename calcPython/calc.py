@@ -53,10 +53,30 @@ def calculate(s_in):
         try:
             s_tmp = token.strip()
             if len(s_tmp) == 1 and is_op(s_tmp):
+                if s_tmp == '!':
+                    if len(stack) < 1:
+                        raise CalcException("Неверное количество данных в стеке для операции \"!\"")
+
+                    a = stack.pop()
+
+                    if a < 0 or not float(a).is_integer():
+                        raise CalcException("Факториал определен только для неотрицательных целых чисел")
+
+                    n = int(a)
+                    if n > 170:
+                        raise OverflowError("Слишком большое значение для факториала")
+
+                    res = 1.0
+                    for i in range(2, n + 1):
+                        res *= i
+
+                    stack.append(res)
+                    continue
+
                 if len(stack) < 2:
                     raise CalcException("Неверное количество данных в стеке для операции " + token)
                 b, a = stack.pop(), stack.pop()
-                match s_tmp[1]: #get first character
+                match s_tmp: #get first character
                     case '+':
                         a += b
                     case '-':
@@ -70,10 +90,10 @@ def calculate(s_in):
                     case '%':
                         a %= b
                     case '^':
-                        a **= b
-                    case '!':
-                        # This operation is not implemented
-                        raise NotImplementedError("TODO: Не забыть реализовать оператор !")
+                        try:
+                            a **= b
+                        except ZeroDivisionError:
+                            raise CalcException("Нельзя возводить ноль в отрицательную степень")
                     case _:
                         raise CalcException("Недопустимая операция " + s_tmp)
                 stack.append(a)
@@ -84,6 +104,8 @@ def calculate(s_in):
             raise CalcException("Недопустимый символ в выражении");
     if len(stack) > 1:
         raise CalcException("Количество операторов не соответствует количеству операндов")
+    if len(stack) == 0:
+        raise CalcException("Пустое выражение")
 
     return stack.pop()
 
