@@ -1,0 +1,1245 @@
+(.venv) vasilisagolikova@MacBook-Pro calcPython %
+python -m pytest --hypothesis-show-statistics fuzz.py
+============================================================ test session starts =============================================================
+platform darwin -- Python 3.12.10, pytest-9.0.3, pluggy-1.6.0
+rootdir: /Users/vasilisagolikova/PycharmProjects/Hometask06Python/calcPython
+plugins: hypothesis-6.100.0
+collected 1 item
+
+fuzz.py F                                                                                                                              [100%]
+
+================================================================== FAILURES ==================================================================
+____________________________________________________ test_calculate_with_processed_input _____________________________________________________
+
+    @given(st.text(alphabet=ALPHABET, min_size=0, max_size=25))
+>   @settings(verbosity=Verbosity.verbose, max_examples=100000, derandomize=True, deadline=None)  # Включает подробный вывод
+                   ^^^
+
+fuzz.py:9:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+fuzz.py:19: in test_calculate_with_processed_input
+    calculate(processed_input)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+s_in = '0 0 ^'
+
+    def calculate(s_in):
+        stack = []
+        for token in s_in.split():
+            try:
+                s_tmp = token.strip()
+                if len(s_tmp) == 1 and is_op(s_tmp):
+                    if len(stack) < 2:
+                        raise CalcException("Неверное количество данных в стеке для операции " + token)
+                    b, a = stack.pop(), stack.pop()
+>                   match s_tmp[1]: #get first character
+                          ^^^^^^^^
+                        case '+':
+E                       IndexError: string index out of range
+E                       Falsifying example: test_calculate_with_processed_input(
+E                           input_string='0^0',
+E                       )
+E                       Explanation:
+E                           These lines were always and only run by failing examples:
+E                               /Users/vasilisagolikova/PycharmProjects/Hometask06Python/calcPython/calc.py:58
+
+calc.py:59: IndexError
+----------------------------------------------------------------- Hypothesis -----------------------------------------------------------------
+Trying example: test_calculate_with_processed_input(
+    input_string='',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='.',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='%*-0()%+**221.1.',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='1 0)2)((',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='0',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='(+^1!3',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='1',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='!. %3',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='(%',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='+3)1*(-2(*',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='!*',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string=' /%',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string=' 1',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='3',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='. ',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string=' %',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='3^!',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='!',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='300',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='(1/',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='^',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='2 ++% 23',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='!+(',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='(',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='31).) %!',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='*//%^/',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='(1',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='1!%%',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='-!!(/2%)2/1+)(3^+*%1-! (',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='3!( % +(/)2!!.+32.0)%',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='/*103- -',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string=' 23!)/%-^.2',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='(- 2.)3',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string=')1)',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='!^!',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='/',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='3+.2+%',
+)
+input_string = '3+.2+%'
+
+    @given(st.text(alphabet=ALPHABET, min_size=0, max_size=25))
+    @settings(verbosity=Verbosity.verbose, max_examples=100000, derandomize=True, deadline=None)  # Включает подробный вывод
+    def test_calculate_with_processed_input(input_string):
+        processed_input = ""
+        try:
+            # Сначала преобразуем входное выражение в ОПН
+            processed_input = opn(input_string)
+        except Exception as e:
+            # Ошибки, связанные с обработкой выражения, могут быть проигнорированы
+            pass
+        try:
+>           calculate(processed_input)
+
+fuzz.py:19:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+s_in = '3 .2 +  % +'
+
+    def calculate(s_in):
+        stack = []
+        for token in s_in.split():
+            try:
+                s_tmp = token.strip()
+                if len(s_tmp) == 1 and is_op(s_tmp):
+                    if len(stack) < 2:
+                        raise CalcException("Неверное количество данных в стеке для операции " + token)
+                    b, a = stack.pop(), stack.pop()
+>                   match s_tmp[1]: #get first character
+                          ^^^^^^^^
+                        case '+':
+E                       IndexError: string index out of range
+
+calc.py:59: IndexError
+
+Trying example: test_calculate_with_processed_input(
+    input_string=' )%*+1',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string=' )%*+1()*^1 / -/!1+!',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string=' ).*+1()*^1 / -/!1+!',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string=' ).*+1()*^1 / -/!1+!',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='/).*+1()*^1 / -/!1+!',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='/).*+1()*^1 / -/!1.!',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='/)./',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string=' (-1^!!++0)+0*+',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string=' (-1^!!++0.',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string=' (-1^!!++0203+-',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='+(-1^!!++0203+-',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='^(-1^!!++0203+-',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='^(-1^!!++02^3+-',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='^!-1^!!++02^3+-',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='!.21',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='0.21',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='0.21',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='  .23*3/ % +.!231/^2**%',
+)
+input_string = '  .23*3/ % +.!231/^2**%'
+
+    @given(st.text(alphabet=ALPHABET, min_size=0, max_size=25))
+    @settings(verbosity=Verbosity.verbose, max_examples=100000, derandomize=True, deadline=None)  # Включает подробный вывод
+    def test_calculate_with_processed_input(input_string):
+        processed_input = ""
+        try:
+            # Сначала преобразуем входное выражение в ОПН
+            processed_input = opn(input_string)
+        except Exception as e:
+            # Ошибки, связанные с обработкой выражения, могут быть проигнорированы
+            pass
+        try:
+>           calculate(processed_input)
+
+fuzz.py:19:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+s_in = '  .23 3 *   %  /  . +  231    2 ^  /    *   % * !'
+
+    def calculate(s_in):
+        stack = []
+        for token in s_in.split():
+            try:
+                s_tmp = token.strip()
+                if len(s_tmp) == 1 and is_op(s_tmp):
+                    if len(stack) < 2:
+                        raise CalcException("Неверное количество данных в стеке для операции " + token)
+                    b, a = stack.pop(), stack.pop()
+>                   match s_tmp[1]: #get first character
+                          ^^^^^^^^
+                        case '+':
+E                       IndexError: string index out of range
+
+calc.py:59: IndexError
+
+Trying example: test_calculate_with_processed_input(
+    input_string='  .23*3/ + +.!231/^2**%',
+)
+input_string = '  .23*3/ + +.!231/^2**%'
+
+    @given(st.text(alphabet=ALPHABET, min_size=0, max_size=25))
+    @settings(verbosity=Verbosity.verbose, max_examples=100000, derandomize=True, deadline=None)  # Включает подробный вывод
+    def test_calculate_with_processed_input(input_string):
+        processed_input = ""
+        try:
+            # Сначала преобразуем входное выражение в ОПН
+            processed_input = opn(input_string)
+        except Exception as e:
+            # Ошибки, связанные с обработкой выражения, могут быть проигнорированы
+            pass
+        try:
+>           calculate(processed_input)
+
+fuzz.py:19:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+s_in = '  .23 3 *    /    +  . +  231    2 ^  /    *   % * !'
+
+    def calculate(s_in):
+        stack = []
+        for token in s_in.split():
+            try:
+                s_tmp = token.strip()
+                if len(s_tmp) == 1 and is_op(s_tmp):
+                    if len(stack) < 2:
+                        raise CalcException("Неверное количество данных в стеке для операции " + token)
+                    b, a = stack.pop(), stack.pop()
+>                   match s_tmp[1]: #get first character
+                          ^^^^^^^^
+                        case '+':
+E                       IndexError: string index out of range
+
+calc.py:59: IndexError
+
+Trying example: test_calculate_with_processed_input(
+    input_string='  .23*3/ + +.3231/^2**%',
+)
+input_string = '  .23*3/ + +.3231/^2**%'
+
+    @given(st.text(alphabet=ALPHABET, min_size=0, max_size=25))
+    @settings(verbosity=Verbosity.verbose, max_examples=100000, derandomize=True, deadline=None)  # Включает подробный вывод
+    def test_calculate_with_processed_input(input_string):
+        processed_input = ""
+        try:
+            # Сначала преобразуем входное выражение в ОПН
+            processed_input = opn(input_string)
+        except Exception as e:
+            # Ошибки, связанные с обработкой выражения, могут быть проигнорированы
+            pass
+        try:
+>           calculate(processed_input)
+
+fuzz.py:19:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+s_in = '  .23 3 *    /    +  .3231    2 ^  /    *   % * +'
+
+    def calculate(s_in):
+        stack = []
+        for token in s_in.split():
+            try:
+                s_tmp = token.strip()
+                if len(s_tmp) == 1 and is_op(s_tmp):
+                    if len(stack) < 2:
+                        raise CalcException("Неверное количество данных в стеке для операции " + token)
+                    b, a = stack.pop(), stack.pop()
+>                   match s_tmp[1]: #get first character
+                          ^^^^^^^^
+                        case '+':
+E                       IndexError: string index out of range
+
+calc.py:59: IndexError
+
+Trying example: test_calculate_with_processed_input(
+    input_string='  .23*3/ + +.3231/^2**%',
+)
+input_string = '  .23*3/ + +.3231/^2**%'
+
+    @given(st.text(alphabet=ALPHABET, min_size=0, max_size=25))
+    @settings(verbosity=Verbosity.verbose, max_examples=100000, derandomize=True, deadline=None)  # Включает подробный вывод
+    def test_calculate_with_processed_input(input_string):
+        processed_input = ""
+        try:
+            # Сначала преобразуем входное выражение в ОПН
+            processed_input = opn(input_string)
+        except Exception as e:
+            # Ошибки, связанные с обработкой выражения, могут быть проигнорированы
+            pass
+        try:
+>           calculate(processed_input)
+
+fuzz.py:19:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+s_in = '  .23 3 *    /    +  .3231    2 ^  /    *   % * +'
+
+    def calculate(s_in):
+        stack = []
+        for token in s_in.split():
+            try:
+                s_tmp = token.strip()
+                if len(s_tmp) == 1 and is_op(s_tmp):
+                    if len(stack) < 2:
+                        raise CalcException("Неверное количество данных в стеке для операции " + token)
+                    b, a = stack.pop(), stack.pop()
+>                   match s_tmp[1]: #get first character
+                          ^^^^^^^^
+                        case '+':
+E                       IndexError: string index out of range
+
+calc.py:59: IndexError
+
+Trying example: test_calculate_with_processed_input(
+    input_string='  .23*3/ + +.3231/^2**%',
+)
+input_string = '  .23*3/ + +.3231/^2**%'
+
+    @given(st.text(alphabet=ALPHABET, min_size=0, max_size=25))
+    @settings(verbosity=Verbosity.verbose, max_examples=100000, derandomize=True, deadline=None)  # Включает подробный вывод
+    def test_calculate_with_processed_input(input_string):
+        processed_input = ""
+        try:
+            # Сначала преобразуем входное выражение в ОПН
+            processed_input = opn(input_string)
+        except Exception as e:
+            # Ошибки, связанные с обработкой выражения, могут быть проигнорированы
+            pass
+        try:
+>           calculate(processed_input)
+
+fuzz.py:19:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+s_in = '  .23 3 *    /    +  .3231    2 ^  /    *   % * +'
+
+    def calculate(s_in):
+        stack = []
+        for token in s_in.split():
+            try:
+                s_tmp = token.strip()
+                if len(s_tmp) == 1 and is_op(s_tmp):
+                    if len(stack) < 2:
+                        raise CalcException("Неверное количество данных в стеке для операции " + token)
+                    b, a = stack.pop(), stack.pop()
+>                   match s_tmp[1]: #get first character
+                          ^^^^^^^^
+                        case '+':
+E                       IndexError: string index out of range
+
+calc.py:59: IndexError
+
+Trying example: test_calculate_with_processed_input(
+    input_string=' %.23*3/ + +.3231/^2**%',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='  .23*3/ +3+.3231/^2**%',
+)
+input_string = '  .23*3/ +3+.3231/^2**%'
+
+    @given(st.text(alphabet=ALPHABET, min_size=0, max_size=25))
+    @settings(verbosity=Verbosity.verbose, max_examples=100000, derandomize=True, deadline=None)  # Включает подробный вывод
+    def test_calculate_with_processed_input(input_string):
+        processed_input = ""
+        try:
+            # Сначала преобразуем входное выражение в ОПН
+            processed_input = opn(input_string)
+        except Exception as e:
+            # Ошибки, связанные с обработкой выражения, могут быть проигнорированы
+            pass
+        try:
+>           calculate(processed_input)
+
+fuzz.py:19:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+s_in = '  .23 3 *    /  3 +  .3231    2 ^  /    *   % * +'
+
+    def calculate(s_in):
+        stack = []
+        for token in s_in.split():
+            try:
+                s_tmp = token.strip()
+                if len(s_tmp) == 1 and is_op(s_tmp):
+                    if len(stack) < 2:
+                        raise CalcException("Неверное количество данных в стеке для операции " + token)
+                    b, a = stack.pop(), stack.pop()
+>                   match s_tmp[1]: #get first character
+                          ^^^^^^^^
+                        case '+':
+E                       IndexError: string index out of range
+
+calc.py:59: IndexError
+
+Trying example: test_calculate_with_processed_input(
+    input_string='3)',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='3',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='33%0',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='33^2',
+)
+input_string = '33^2'
+
+    @given(st.text(alphabet=ALPHABET, min_size=0, max_size=25))
+    @settings(verbosity=Verbosity.verbose, max_examples=100000, derandomize=True, deadline=None)  # Включает подробный вывод
+    def test_calculate_with_processed_input(input_string):
+        processed_input = ""
+        try:
+            # Сначала преобразуем входное выражение в ОПН
+            processed_input = opn(input_string)
+        except Exception as e:
+            # Ошибки, связанные с обработкой выражения, могут быть проигнорированы
+            pass
+        try:
+>           calculate(processed_input)
+
+fuzz.py:19:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+s_in = '33 2 ^'
+
+    def calculate(s_in):
+        stack = []
+        for token in s_in.split():
+            try:
+                s_tmp = token.strip()
+                if len(s_tmp) == 1 and is_op(s_tmp):
+                    if len(stack) < 2:
+                        raise CalcException("Неверное количество данных в стеке для операции " + token)
+                    b, a = stack.pop(), stack.pop()
+>                   match s_tmp[1]: #get first character
+                          ^^^^^^^^
+                        case '+':
+E                       IndexError: string index out of range
+
+calc.py:59: IndexError
+
+Trying example: test_calculate_with_processed_input(
+    input_string='33^3',
+)
+input_string = '33^3'
+
+    @given(st.text(alphabet=ALPHABET, min_size=0, max_size=25))
+    @settings(verbosity=Verbosity.verbose, max_examples=100000, derandomize=True, deadline=None)  # Включает подробный вывод
+    def test_calculate_with_processed_input(input_string):
+        processed_input = ""
+        try:
+            # Сначала преобразуем входное выражение в ОПН
+            processed_input = opn(input_string)
+        except Exception as e:
+            # Ошибки, связанные с обработкой выражения, могут быть проигнорированы
+            pass
+        try:
+>           calculate(processed_input)
+
+fuzz.py:19:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+s_in = '33 3 ^'
+
+    def calculate(s_in):
+        stack = []
+        for token in s_in.split():
+            try:
+                s_tmp = token.strip()
+                if len(s_tmp) == 1 and is_op(s_tmp):
+                    if len(stack) < 2:
+                        raise CalcException("Неверное количество данных в стеке для операции " + token)
+                    b, a = stack.pop(), stack.pop()
+>                   match s_tmp[1]: #get first character
+                          ^^^^^^^^
+                        case '+':
+E                       IndexError: string index out of range
+
+calc.py:59: IndexError
+
+Trying example: test_calculate_with_processed_input(
+    input_string='3333',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='!3-',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='-3-',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='-3-(',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='33-(',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='33-(',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='33-(',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='33-(/%%0/^-.0-%.)0-.!1/',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='33^2',
+)
+input_string = '33^2'
+
+    @given(st.text(alphabet=ALPHABET, min_size=0, max_size=25))
+    @settings(verbosity=Verbosity.verbose, max_examples=100000, derandomize=True, deadline=None)  # Включает подробный вывод
+    def test_calculate_with_processed_input(input_string):
+        processed_input = ""
+        try:
+            # Сначала преобразуем входное выражение в ОПН
+            processed_input = opn(input_string)
+        except Exception as e:
+            # Ошибки, связанные с обработкой выражения, могут быть проигнорированы
+            pass
+        try:
+>           calculate(processed_input)
+
+fuzz.py:19:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+s_in = '33 2 ^'
+
+    def calculate(s_in):
+        stack = []
+        for token in s_in.split():
+            try:
+                s_tmp = token.strip()
+                if len(s_tmp) == 1 and is_op(s_tmp):
+                    if len(stack) < 2:
+                        raise CalcException("Неверное количество данных в стеке для операции " + token)
+                    b, a = stack.pop(), stack.pop()
+>                   match s_tmp[1]: #get first character
+                          ^^^^^^^^
+                        case '+':
+E                       IndexError: string index out of range
+
+calc.py:59: IndexError
+
+Trying example: test_calculate_with_processed_input(
+    input_string='33',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='32',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='32',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='^2',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='33^',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='332',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='332',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='3^2',
+)
+input_string = '3^2'
+
+    @given(st.text(alphabet=ALPHABET, min_size=0, max_size=25))
+    @settings(verbosity=Verbosity.verbose, max_examples=100000, derandomize=True, deadline=None)  # Включает подробный вывод
+    def test_calculate_with_processed_input(input_string):
+        processed_input = ""
+        try:
+            # Сначала преобразуем входное выражение в ОПН
+            processed_input = opn(input_string)
+        except Exception as e:
+            # Ошибки, связанные с обработкой выражения, могут быть проигнорированы
+            pass
+        try:
+>           calculate(processed_input)
+
+fuzz.py:19:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+s_in = '3 2 ^'
+
+    def calculate(s_in):
+        stack = []
+        for token in s_in.split():
+            try:
+                s_tmp = token.strip()
+                if len(s_tmp) == 1 and is_op(s_tmp):
+                    if len(stack) < 2:
+                        raise CalcException("Неверное количество данных в стеке для операции " + token)
+                    b, a = stack.pop(), stack.pop()
+>                   match s_tmp[1]: #get first character
+                          ^^^^^^^^
+                        case '+':
+E                       IndexError: string index out of range
+
+calc.py:59: IndexError
+
+Trying example: test_calculate_with_processed_input(
+    input_string='3^',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='3^2',
+)
+input_string = '3^2'
+
+    @given(st.text(alphabet=ALPHABET, min_size=0, max_size=25))
+    @settings(verbosity=Verbosity.verbose, max_examples=100000, derandomize=True, deadline=None)  # Включает подробный вывод
+    def test_calculate_with_processed_input(input_string):
+        processed_input = ""
+        try:
+            # Сначала преобразуем входное выражение в ОПН
+            processed_input = opn(input_string)
+        except Exception as e:
+            # Ошибки, связанные с обработкой выражения, могут быть проигнорированы
+            pass
+        try:
+>           calculate(processed_input)
+
+fuzz.py:19:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+s_in = '3 2 ^'
+
+    def calculate(s_in):
+        stack = []
+        for token in s_in.split():
+            try:
+                s_tmp = token.strip()
+                if len(s_tmp) == 1 and is_op(s_tmp):
+                    if len(stack) < 2:
+                        raise CalcException("Неверное количество данных в стеке для операции " + token)
+                    b, a = stack.pop(), stack.pop()
+>                   match s_tmp[1]: #get first character
+                          ^^^^^^^^
+                        case '+':
+E                       IndexError: string index out of range
+
+calc.py:59: IndexError
+
+Trying example: test_calculate_with_processed_input(
+    input_string='3^2',
+)
+input_string = '3^2'
+
+    @given(st.text(alphabet=ALPHABET, min_size=0, max_size=25))
+    @settings(verbosity=Verbosity.verbose, max_examples=100000, derandomize=True, deadline=None)  # Включает подробный вывод
+    def test_calculate_with_processed_input(input_string):
+        processed_input = ""
+        try:
+            # Сначала преобразуем входное выражение в ОПН
+            processed_input = opn(input_string)
+        except Exception as e:
+            # Ошибки, связанные с обработкой выражения, могут быть проигнорированы
+            pass
+        try:
+>           calculate(processed_input)
+
+fuzz.py:19:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+s_in = '3 2 ^'
+
+    def calculate(s_in):
+        stack = []
+        for token in s_in.split():
+            try:
+                s_tmp = token.strip()
+                if len(s_tmp) == 1 and is_op(s_tmp):
+                    if len(stack) < 2:
+                        raise CalcException("Неверное количество данных в стеке для операции " + token)
+                    b, a = stack.pop(), stack.pop()
+>                   match s_tmp[1]: #get first character
+                          ^^^^^^^^
+                        case '+':
+E                       IndexError: string index out of range
+
+calc.py:59: IndexError
+
+Trying example: test_calculate_with_processed_input(
+    input_string='3^2',
+)
+input_string = '3^2'
+
+    @given(st.text(alphabet=ALPHABET, min_size=0, max_size=25))
+    @settings(verbosity=Verbosity.verbose, max_examples=100000, derandomize=True, deadline=None)  # Включает подробный вывод
+    def test_calculate_with_processed_input(input_string):
+        processed_input = ""
+        try:
+            # Сначала преобразуем входное выражение в ОПН
+            processed_input = opn(input_string)
+        except Exception as e:
+            # Ошибки, связанные с обработкой выражения, могут быть проигнорированы
+            pass
+        try:
+>           calculate(processed_input)
+
+fuzz.py:19:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+s_in = '3 2 ^'
+
+    def calculate(s_in):
+        stack = []
+        for token in s_in.split():
+            try:
+                s_tmp = token.strip()
+                if len(s_tmp) == 1 and is_op(s_tmp):
+                    if len(stack) < 2:
+                        raise CalcException("Неверное количество данных в стеке для операции " + token)
+                    b, a = stack.pop(), stack.pop()
+>                   match s_tmp[1]: #get first character
+                          ^^^^^^^^
+                        case '+':
+E                       IndexError: string index out of range
+
+calc.py:59: IndexError
+
+Trying example: test_calculate_with_processed_input(
+    input_string='3^2',
+)
+input_string = '3^2'
+
+    @given(st.text(alphabet=ALPHABET, min_size=0, max_size=25))
+    @settings(verbosity=Verbosity.verbose, max_examples=100000, derandomize=True, deadline=None)  # Включает подробный вывод
+    def test_calculate_with_processed_input(input_string):
+        processed_input = ""
+        try:
+            # Сначала преобразуем входное выражение в ОПН
+            processed_input = opn(input_string)
+        except Exception as e:
+            # Ошибки, связанные с обработкой выражения, могут быть проигнорированы
+            pass
+        try:
+>           calculate(processed_input)
+
+fuzz.py:19:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+s_in = '3 2 ^'
+
+    def calculate(s_in):
+        stack = []
+        for token in s_in.split():
+            try:
+                s_tmp = token.strip()
+                if len(s_tmp) == 1 and is_op(s_tmp):
+                    if len(stack) < 2:
+                        raise CalcException("Неверное количество данных в стеке для операции " + token)
+                    b, a = stack.pop(), stack.pop()
+>                   match s_tmp[1]: #get first character
+                          ^^^^^^^^
+                        case '+':
+E                       IndexError: string index out of range
+
+calc.py:59: IndexError
+
+Trying example: test_calculate_with_processed_input(
+    input_string='3^2',
+)
+input_string = '3^2'
+
+    @given(st.text(alphabet=ALPHABET, min_size=0, max_size=25))
+    @settings(verbosity=Verbosity.verbose, max_examples=100000, derandomize=True, deadline=None)  # Включает подробный вывод
+    def test_calculate_with_processed_input(input_string):
+        processed_input = ""
+        try:
+            # Сначала преобразуем входное выражение в ОПН
+            processed_input = opn(input_string)
+        except Exception as e:
+            # Ошибки, связанные с обработкой выражения, могут быть проигнорированы
+            pass
+        try:
+>           calculate(processed_input)
+
+fuzz.py:19:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+s_in = '3 2 ^'
+
+    def calculate(s_in):
+        stack = []
+        for token in s_in.split():
+            try:
+                s_tmp = token.strip()
+                if len(s_tmp) == 1 and is_op(s_tmp):
+                    if len(stack) < 2:
+                        raise CalcException("Неверное количество данных в стеке для операции " + token)
+                    b, a = stack.pop(), stack.pop()
+>                   match s_tmp[1]: #get first character
+                          ^^^^^^^^
+                        case '+':
+E                       IndexError: string index out of range
+
+calc.py:59: IndexError
+
+Trying example: test_calculate_with_processed_input(
+    input_string='3^2',
+)
+input_string = '3^2'
+
+    @given(st.text(alphabet=ALPHABET, min_size=0, max_size=25))
+    @settings(verbosity=Verbosity.verbose, max_examples=100000, derandomize=True, deadline=None)  # Включает подробный вывод
+    def test_calculate_with_processed_input(input_string):
+        processed_input = ""
+        try:
+            # Сначала преобразуем входное выражение в ОПН
+            processed_input = opn(input_string)
+        except Exception as e:
+            # Ошибки, связанные с обработкой выражения, могут быть проигнорированы
+            pass
+        try:
+>           calculate(processed_input)
+
+fuzz.py:19:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+s_in = '3 2 ^'
+
+    def calculate(s_in):
+        stack = []
+        for token in s_in.split():
+            try:
+                s_tmp = token.strip()
+                if len(s_tmp) == 1 and is_op(s_tmp):
+                    if len(stack) < 2:
+                        raise CalcException("Неверное количество данных в стеке для операции " + token)
+                    b, a = stack.pop(), stack.pop()
+>                   match s_tmp[1]: #get first character
+                          ^^^^^^^^
+                        case '+':
+E                       IndexError: string index out of range
+
+calc.py:59: IndexError
+
+Trying example: test_calculate_with_processed_input(
+    input_string='33',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='22',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='3^0',
+)
+input_string = '3^0'
+
+    @given(st.text(alphabet=ALPHABET, min_size=0, max_size=25))
+    @settings(verbosity=Verbosity.verbose, max_examples=100000, derandomize=True, deadline=None)  # Включает подробный вывод
+    def test_calculate_with_processed_input(input_string):
+        processed_input = ""
+        try:
+            # Сначала преобразуем входное выражение в ОПН
+            processed_input = opn(input_string)
+        except Exception as e:
+            # Ошибки, связанные с обработкой выражения, могут быть проигнорированы
+            pass
+        try:
+>           calculate(processed_input)
+
+fuzz.py:19:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+s_in = '3 0 ^'
+
+    def calculate(s_in):
+        stack = []
+        for token in s_in.split():
+            try:
+                s_tmp = token.strip()
+                if len(s_tmp) == 1 and is_op(s_tmp):
+                    if len(stack) < 2:
+                        raise CalcException("Неверное количество данных в стеке для операции " + token)
+                    b, a = stack.pop(), stack.pop()
+>                   match s_tmp[1]: #get first character
+                          ^^^^^^^^
+                        case '+':
+E                       IndexError: string index out of range
+
+calc.py:59: IndexError
+
+Trying example: test_calculate_with_processed_input(
+    input_string='3^',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='300',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='310',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='320',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='330',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='0^0',
+)
+input_string = '0^0'
+
+    @given(st.text(alphabet=ALPHABET, min_size=0, max_size=25))
+    @settings(verbosity=Verbosity.verbose, max_examples=100000, derandomize=True, deadline=None)  # Включает подробный вывод
+    def test_calculate_with_processed_input(input_string):
+        processed_input = ""
+        try:
+            # Сначала преобразуем входное выражение в ОПН
+            processed_input = opn(input_string)
+        except Exception as e:
+            # Ошибки, связанные с обработкой выражения, могут быть проигнорированы
+            pass
+        try:
+>           calculate(processed_input)
+
+fuzz.py:19:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+s_in = '0 0 ^'
+
+    def calculate(s_in):
+        stack = []
+        for token in s_in.split():
+            try:
+                s_tmp = token.strip()
+                if len(s_tmp) == 1 and is_op(s_tmp):
+                    if len(stack) < 2:
+                        raise CalcException("Неверное количество данных в стеке для операции " + token)
+                    b, a = stack.pop(), stack.pop()
+>                   match s_tmp[1]: #get first character
+                          ^^^^^^^^
+                        case '+':
+E                       IndexError: string index out of range
+
+calc.py:59: IndexError
+
+Trying example: test_calculate_with_processed_input(
+    input_string='0^',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='000',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='010',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='020',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='030',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='0',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='03',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='00',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='11',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='^0',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='0^0',
+)
+input_string = '0^0'
+
+    @given(st.text(alphabet=ALPHABET, min_size=0, max_size=25))
+    @settings(verbosity=Verbosity.verbose, max_examples=100000, derandomize=True, deadline=None)  # Включает подробный вывод
+    def test_calculate_with_processed_input(input_string):
+        processed_input = ""
+        try:
+            # Сначала преобразуем входное выражение в ОПН
+            processed_input = opn(input_string)
+        except Exception as e:
+            # Ошибки, связанные с обработкой выражения, могут быть проигнорированы
+            pass
+        try:
+>           calculate(processed_input)
+
+fuzz.py:19:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+s_in = '0 0 ^'
+
+    def calculate(s_in):
+        stack = []
+        for token in s_in.split():
+            try:
+                s_tmp = token.strip()
+                if len(s_tmp) == 1 and is_op(s_tmp):
+                    if len(stack) < 2:
+                        raise CalcException("Неверное количество данных в стеке для операции " + token)
+                    b, a = stack.pop(), stack.pop()
+>                   match s_tmp[1]: #get first character
+                          ^^^^^^^^
+                        case '+':
+E                       IndexError: string index out of range
+
+calc.py:59: IndexError
+
+Trying example: test_calculate_with_processed_input(
+    input_string='0^0',
+)
+input_string = '0^0'
+
+    @given(st.text(alphabet=ALPHABET, min_size=0, max_size=25))
+    @settings(verbosity=Verbosity.verbose, max_examples=100000, derandomize=True, deadline=None)  # Включает подробный вывод
+    def test_calculate_with_processed_input(input_string):
+        processed_input = ""
+        try:
+            # Сначала преобразуем входное выражение в ОПН
+            processed_input = opn(input_string)
+        except Exception as e:
+            # Ошибки, связанные с обработкой выражения, могут быть проигнорированы
+            pass
+        try:
+>           calculate(processed_input)
+
+fuzz.py:19:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+s_in = '0 0 ^'
+
+    def calculate(s_in):
+        stack = []
+        for token in s_in.split():
+            try:
+                s_tmp = token.strip()
+                if len(s_tmp) == 1 and is_op(s_tmp):
+                    if len(stack) < 2:
+                        raise CalcException("Неверное количество данных в стеке для операции " + token)
+                    b, a = stack.pop(), stack.pop()
+>                   match s_tmp[1]: #get first character
+                          ^^^^^^^^
+                        case '+':
+E                       IndexError: string index out of range
+
+calc.py:59: IndexError
+
+Trying example: test_calculate_with_processed_input(
+    input_string='0^0',
+)
+input_string = '0^0'
+
+    @given(st.text(alphabet=ALPHABET, min_size=0, max_size=25))
+    @settings(verbosity=Verbosity.verbose, max_examples=100000, derandomize=True, deadline=None)  # Включает подробный вывод
+    def test_calculate_with_processed_input(input_string):
+        processed_input = ""
+        try:
+            # Сначала преобразуем входное выражение в ОПН
+            processed_input = opn(input_string)
+        except Exception as e:
+            # Ошибки, связанные с обработкой выражения, могут быть проигнорированы
+            pass
+        try:
+>           calculate(processed_input)
+
+fuzz.py:19:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+s_in = '0 0 ^'
+
+    def calculate(s_in):
+        stack = []
+        for token in s_in.split():
+            try:
+                s_tmp = token.strip()
+                if len(s_tmp) == 1 and is_op(s_tmp):
+                    if len(stack) < 2:
+                        raise CalcException("Неверное количество данных в стеке для операции " + token)
+                    b, a = stack.pop(), stack.pop()
+>                   match s_tmp[1]: #get first character
+                          ^^^^^^^^
+                        case '+':
+E                       IndexError: string index out of range
+
+calc.py:59: IndexError
+
+Trying example: test_calculate_with_processed_input(
+    input_string='0^0',
+)
+input_string = '0^0'
+
+    @given(st.text(alphabet=ALPHABET, min_size=0, max_size=25))
+    @settings(verbosity=Verbosity.verbose, max_examples=100000, derandomize=True, deadline=None)  # Включает подробный вывод
+    def test_calculate_with_processed_input(input_string):
+        processed_input = ""
+        try:
+            # Сначала преобразуем входное выражение в ОПН
+            processed_input = opn(input_string)
+        except Exception as e:
+            # Ошибки, связанные с обработкой выражения, могут быть проигнорированы
+            pass
+        try:
+>           calculate(processed_input)
+
+fuzz.py:19:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+s_in = '0 0 ^'
+
+    def calculate(s_in):
+        stack = []
+        for token in s_in.split():
+            try:
+                s_tmp = token.strip()
+                if len(s_tmp) == 1 and is_op(s_tmp):
+                    if len(stack) < 2:
+                        raise CalcException("Неверное количество данных в стеке для операции " + token)
+                    b, a = stack.pop(), stack.pop()
+>                   match s_tmp[1]: #get first character
+                          ^^^^^^^^
+                        case '+':
+E                       IndexError: string index out of range
+
+calc.py:59: IndexError
+
+Trying example: test_calculate_with_processed_input(
+    input_string='1',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='1',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='01',
+)
+Trying example: test_calculate_with_processed_input(
+    input_string='01',
+)
+=========================================================== Hypothesis Statistics ============================================================
+fuzz.py::test_calculate_with_processed_input:
+
+  - during generate phase (0.09 seconds):
+    - Typical runtimes: ~ 0-3 ms, of which ~ 0-1 ms in data generation
+    - 65 passing examples, 9 failing examples, 0 invalid examples
+    - Found 1 distinct error in this phase
+
+  - during shrink phase (0.06 seconds):
+    - Typical runtimes: ~ 0-2 ms, of which < 1ms in data generation
+    - 29 passing examples, 5 failing examples, 0 invalid examples
+    - Tried 34 shrinks of which 5 were successful
+
+  - Stopped because nothing left to do
+
+
+========================================================== short test summary info ===========================================================
+FAILED fuzz.py::test_calculate_with_processed_input - IndexError: string index out of range
+============================================================= 1 failed in 0.28s ==============================================================

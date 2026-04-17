@@ -1,0 +1,78 @@
+(.venv) vasilisagolikova@MacBook-Pro calcPython %
+python -m pytest --hypothesis-show-statistics fuzz_yaml.py
+========================================================= test session starts =========================================================
+platform darwin -- Python 3.12.10, pytest-9.0.3, pluggy-1.6.0
+rootdir: /Users/vasilisagolikova/PycharmProjects/Hometask06Python/calcPython
+plugins: hypothesis-6.100.0
+collected 3 items
+
+fuzz_yaml.py ...                                                                                                                [100%]
+======================================================== Hypothesis Statistics ========================================================
+
+fuzz_yaml.py::test_yaml_safe_load:
+
+  - during generate phase (43.05 seconds):
+    - Typical runtimes: < 1ms, of which < 1ms in data generation
+    - 100000 passing examples, 0 failing examples, 0 invalid examples
+
+  - Stopped because settings.max_examples=100000
+
+
+fuzz_yaml.py::test_yaml_scan:
+
+  - during generate phase (41.84 seconds):
+    - Typical runtimes: < 1ms, of which < 1ms in data generation
+    - 100000 passing examples, 0 failing examples, 0 invalid examples
+
+  - Stopped because settings.max_examples=100000
+
+
+fuzz_yaml.py::test_yaml_compose:
+
+  - during generate phase (43.07 seconds):
+    - Typical runtimes: < 1ms, of which < 1ms in data generation
+    - 100000 passing examples, 0 failing examples, 0 invalid examples
+
+  - Stopped because settings.max_examples=100000
+
+
+==================================================== 3 passed in 128.42s (0:02:08) ====================================================
+(.venv) vasilisagolikova@MacBook-Pro calcPython %
+python -m pytest --hypothesis-show-statistics fuzz_yaml.py
+========================================================= test session starts =========================================================
+platform darwin -- Python 3.12.10, pytest-9.0.3, pluggy-1.6.0
+rootdir: /Users/vasilisagolikova/PycharmProjects/Hometask06Python/calcPython
+plugins: hypothesis-6.100.0
+collected 3 items
+
+fuzz_yaml.py ...                                                                                                                [100%]
+======================================================== Hypothesis Statistics ========================================================
+
+fuzz_yaml.py::test_yaml_safe_load:
+
+  - during generate phase (59.13 seconds):
+    - Typical runtimes: < 1ms, of which < 1ms in data generation
+    - 138962 passing examples, 0 failing examples, 0 invalid examples
+
+  - Stopped because nothing left to do
+
+
+fuzz_yaml.py::test_yaml_scan:
+
+  - during generate phase (57.99 seconds):
+    - Typical runtimes: < 1ms, of which < 1ms in data generation
+    - 138560 passing examples, 0 failing examples, 0 invalid examples
+
+  - Stopped because nothing left to do
+
+
+fuzz_yaml.py::test_yaml_compose:
+
+  - during generate phase (57.60 seconds):
+    - Typical runtimes: < 1ms, of which < 1ms in data generation
+    - 138549 passing examples, 0 failing examples, 0 invalid examples
+
+  - Stopped because nothing left to do
+
+
+==================================================== 3 passed in 175.34s (0:02:55) ====================================================

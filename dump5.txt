@@ -1,0 +1,21 @@
+(.venv) vasilisagolikova@MacBook-Pro calcPython %
+python -m pytest --hypothesis-show-statistics fuzz.py
+========================================================================= test session starts =========================================================================
+platform darwin -- Python 3.12.10, pytest-9.0.3, pluggy-1.6.0
+rootdir: /Users/vasilisagolikova/PycharmProjects/Hometask06Python/calcPython
+plugins: hypothesis-6.100.0
+collected 1 item
+
+fuzz.py .                                                                                                                                                       [100%]
+======================================================================== Hypothesis Statistics ========================================================================
+
+fuzz.py::test_calculate_with_processed_input:
+
+  - during generate phase (41.20 seconds):
+    - Typical runtimes: < 1ms, of which < 1ms in data generation
+    - 100000 passing examples, 0 failing examples, 0 invalid examples
+
+  - Stopped because settings.max_examples=100000
+
+
+========================================================================= 1 passed in 41.34s ==========================================================================
